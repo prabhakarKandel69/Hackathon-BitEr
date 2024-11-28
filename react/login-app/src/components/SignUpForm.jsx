@@ -8,6 +8,7 @@ const SignUpForm = ({ onSuccess, onError }) => {
   const [companyName, setCompanyName] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setpassword] = useState("");
   
   const [errors, setErrors] = useState({}); // To store validation errors
 
@@ -35,43 +36,51 @@ const SignUpForm = ({ onSuccess, onError }) => {
     return Object.keys(formErrors).length === 0; // If no errors, return true
   };
 
-  // Handle form submission
   const handleSignUp = async (e) => {
     e.preventDefault();
-    
+  
     if (!validate()) return; // If validation fails, don't submit
-
+  
     const signUpData = {
       firstName,
       lastName,
       companyName,
       companyPhone,
       email,
+      password,
     };
-
+  
     try {
-      const response = await fetch("https://your-backend-api.com/signup", {
+      const response = await fetch("https://poudelsangam.com.np/hackathon/signup.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(signUpData),
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        onSuccess();
-        console.log("Response:", data);
-      } else {
-        const error = await response.json();
-        onError(error.message || "Sign-up failed.");
+  
+      const textResponse = await response.text();  // Get raw response as text
+      console.log("Raw Response:", textResponse);  // Check if it's HTML or JSON
+  
+      try {
+        const data = JSON.parse(textResponse);  // Parse response manually
+        if (response.ok) {
+          onSuccess();
+          console.log("Response:", data);
+        } else {
+          onError(data.message || "Sign-up failed.");
+        }
+      } catch (err) {
+        console.error("Error parsing JSON:", err);
+        onError("An unexpected error occurred.");
       }
     } catch (err) {
       console.error("Error:", err);
       onError("An unexpected error occurred.");
     }
   };
-
+  
+  
   return (
     <form onSubmit={handleSignUp}>
       <div className="flex space-x-4 mb-4">
@@ -130,6 +139,16 @@ const SignUpForm = ({ onSuccess, onError }) => {
         placeholder="Enter your email"
         required
         error={errors.email}
+      />
+
+<InputField
+        label="password"
+        type="password"
+        value={password}
+        onChange={(e) => setpassword(e.target.value)}
+        placeholder="Enter your password"
+        required
+        error={errors.password}
       />
 
       <Button

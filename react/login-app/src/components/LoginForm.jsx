@@ -4,7 +4,7 @@ import InputField from './InputField';
 import Button from './Button';
 
 const LoginForm = ({ onSuccess, onError }) => {
-  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate(); // Initialize navigate
@@ -12,7 +12,7 @@ const LoginForm = ({ onSuccess, onError }) => {
 
   const validate = () => {
     let formErrors = {};
-    if (!username) formErrors.username = 'Username is required';
+    if (!email) formErrors.email = 'Email is required';
     if (!password) formErrors.password = 'Password is required';
 
     setErrors(formErrors);
@@ -21,43 +21,45 @@ const LoginForm = ({ onSuccess, onError }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (!validate()) return; // Do not proceed if validation fails
-
-
+  
+    if (!validate()) return;
+  
     try {
-      const response = await fetch('https://your-backend-api.com/login', {
+      const response = await fetch('https://poudelsangam.com.np/hackathon/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password, rememberMe }),
+        body: JSON.stringify({ email, password, rememberMe }),
       });
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        const data = await response.json();
-        if (data.token) localStorage.setItem('authToken', data.token);
+        const user = { id: data.id, email: data.email };
+        sessionStorage.setItem("user", JSON.stringify(user)); // Store in sessionStorage
+        if (rememberMe) {
+          localStorage.setItem("user", JSON.stringify(user)); // Store in localStorage if "Remember Me" is checked
+        }
         onSuccess();
       } else {
-        const error = await response.json();
-        onError(error.message || 'Login failed.');
+        onError(data.error || 'Login failed.');
       }
     } catch (err) {
-      onError('An unexpected error occurred.');
+      onError('An unexpected error occurred. Please try again later.');
     }
   };
 
   return (
     <form onSubmit={handleLogin} className="space-y-4">
       <InputField
-        label="Username"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Enter your username"
+        label="email"
+        type="email"
+        value={email}
+        onChange={(e) => setemail(e.target.value)}
+        placeholder="Enter your email"
         required
-        error={errors.username}
-
+        error={errors.email}
       />
       <InputField
         label="Password"
@@ -67,7 +69,6 @@ const LoginForm = ({ onSuccess, onError }) => {
         placeholder="Enter your password"
         required
         error={errors.password}
-
       />
       <div className="flex items-center justify-between mt-4 mb-4">
         <label className="flex items-center text-gray-600 text-sm">
@@ -91,17 +92,16 @@ const LoginForm = ({ onSuccess, onError }) => {
       </Button>
 
       {/* Register Button */}
-<div className="text-center mt-4">
-  <span className="text-sm text-gray-600">Don't have an account yet?</span> 
-  <a
-    href="#"
-    className="text-sm text-blue-500 hover:text-blue-600 font-semibold ml-1"
-    onClick={() => navigate('/signup')}
-  >
-    Create an account
-  </a>
-</div>
-
+      <div className="text-center mt-4">
+        <span className="text-sm text-gray-600">Don't have an account yet?</span> 
+        <a
+          href="#"
+          className="text-sm text-blue-500 hover:text-blue-600 font-semibold ml-1"
+          onClick={() => navigate('/signup')}
+        >
+          Create an account
+        </a>
+      </div>
     </form>
   );
 };

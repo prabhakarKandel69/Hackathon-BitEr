@@ -7,7 +7,10 @@ const Logout = () => {
   useEffect(() => {
     // Clear user authentication data (e.g., token, session storage, etc.)
     localStorage.removeItem('authToken'); // Adjust according to your authentication logic
+    sessionStorage.removeItem("user");
     sessionStorage.clear();
+   
+
 
     // Redirect to login page after logout
     navigate('/login');
