@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className="mt-6 text-sm text-gray-500 flex items-center justify-between">
       {/* Powered by text */}
-      <span className="text-gray-700">@bit-er 2024</span>
+      <span className="text-gray-800">@bit-er 2024</span>
       
       {/* Developed By Section with Image and Link */}
       <a 
