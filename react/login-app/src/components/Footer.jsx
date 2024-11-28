@@ -13,7 +13,7 @@ const Footer = () => {
         target="_blank" 
         rel="noopener noreferrer"
       >
-        <span className="text-gray-700">Powered by</span>
+        <span className="text-gray-700">Developed by</span>
 
         <img 
           className="w-8 h-8 " 
