@@ -39,9 +39,9 @@ def process_image_bulk(input_dir, output_dir="Processed_Images"):
                     f.write(text)
                 print(f"Processed and saved: {output_file}")
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     # Set the input directory relative to the script's location
-    base_dir = os.path.dirname(os.path.abspath(_file_))  # Get the script's directory
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
     input_directory = os.path.join(base_dir, "..", "Images")  # Navigate to Hackathon/Images
     output_directory = os.path.join(base_dir, "..", "Processed_Images")
 
