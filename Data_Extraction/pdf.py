@@ -1,3 +1,4 @@
+
 import fitz  # PyMuPDF
 import os
 
@@ -43,4 +44,5 @@ if _name_ == "_main_":
     output_directory = os.path.join(base_dir, "..", "Processed_PDFs")
 
     
+
     process_pdf_bulk(input_directory, output_directory)
