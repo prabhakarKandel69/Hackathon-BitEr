@@ -1,17 +1,23 @@
-from django.views.generic import CreateView
-from django.urls import reverse_lazy
-from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomUserCreationForm
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.contrib.auth import authenticate
+from rest_framework import generics
+from .serializers import UserSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import LoginSerializer
 
-class SignUpView(CreateView):
 
 
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+class UserSignupView(generics.CreateAPIView):
+    serializer_class = UserSerializer
 
-    def form_valid(self, form):
-        form.save()  # Save the user
-        return super().form_valid(form)
+class LoginView(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
 
-    
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
