@@ -1,53 +1,3 @@
-// import React, { useState } from 'react';
-// import UploadButton from '../UploadButton';
-// import FileInput from '../FileInput';
-// import ProgressBar from '../ProgressBar';
-
-
-// const FileUploadPage = () => {
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const [previewUrl, setPreviewUrl] = useState(null);
-//   const [uploadProgress, setUploadProgress] = useState(0);
-
-//   const handleFileChange = (file) => {
-//     setSelectedFile(file);
-//     if (file) {
-//       setPreviewUrl(URL.createObjectURL(file));
-//     }
-//   };
-
-//   const handleFileUpload = async () => {
-//     if (!selectedFile) {
-//       alert('Please select a file to upload.');
-//       return;
-//     }
-
-//     // Simulate file upload progress
-//     setUploadProgress(0);
-//     await new Promise((resolve) =>
-//       setTimeout(() => {
-//         setUploadProgress(100);
-//         resolve();
-//       }, 2000)
-//     );
-
-//     alert('File uploaded successfully!');
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-6">
-//       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
-//         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Upload File</h1>
-//         <FileInput onFileChange={handleFileChange} />
-//         {/* <FilePreview previewUrl={previewUrl} /> */}
-//         <ProgressBar progress={uploadProgress} />
-//         <UploadButton onUpload={handleFileUpload} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FileUploadPage;
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import UserProfile from '../UserProfile';
@@ -58,6 +8,7 @@ import ProgressBar from '../ProgressBar';
 const FileUploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false); // Track upload state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -74,16 +25,34 @@ const FileUploadPage = () => {
       return;
     }
 
-    // Simulate file upload progress
+    setIsUploading(true); // Disable the upload button
     setUploadProgress(0);
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        setUploadProgress(100);
-        resolve();
-      }, 2000)
-    );
 
-    alert('File uploaded successfully!');
+    // Simulate file upload using FormData
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      // Mock API request to simulate file upload
+      await new Promise((resolve) => {
+        const interval = setInterval(() => {
+          setUploadProgress((prevProgress) => {
+            if (prevProgress >= 100) {
+              clearInterval(interval);
+              resolve();
+              return 100;
+            }
+            return prevProgress + 10; // Increment progress
+          });
+        }, 200); // Simulated delay
+      });
+
+      alert('File uploaded successfully!');
+    } catch (error) {
+      alert('Error uploading file.');
+    } finally {
+      setIsUploading(false); // Re-enable the button
+    }
   };
 
   return (
@@ -139,7 +108,12 @@ const FileUploadPage = () => {
             </h1>
             <FileInput onFileChange={handleFileChange} />
             <ProgressBar progress={uploadProgress} />
-            <UploadButton onUpload={handleFileUpload} />
+            <UploadButton
+              onUpload={handleFileUpload}
+              disabled={isUploading} // Disable button during upload
+            >
+              {isUploading ? 'Uploading...' : 'Upload'}
+            </UploadButton>
           </div>
         </div>
       </div>

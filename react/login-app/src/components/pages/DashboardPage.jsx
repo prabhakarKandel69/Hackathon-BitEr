@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import UserProfile from '../UserProfile';
@@ -29,11 +28,11 @@ const DashboardPage = () => {
           isSidebarOpen ? 'pl-64' : 'pl-0 lg:pl-64'
         }`}
       >
-        {/* Top Bar */}
-        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10">
+        {/* Top Bar - Hidden in Large View */}
+        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10 lg:hidden">
           {/* Hamburger Menu for Mobile */}
           <button
-            className="lg:hidden text-white"
+            className="text-white"
             onClick={toggleSidebar}
             aria-label="Toggle Sidebar"
           >
