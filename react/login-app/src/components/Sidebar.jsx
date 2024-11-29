@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } lg:block w-64 bg-black text-white h-full fixed top-0 left-0 z-50`}
+      } lg:block w-64 bg-blue-300 text-white h-full fixed top-0 left-0 z-50`}
     >
       {/* Sidebar Header with Profile */}
       <div className="flex flex-col items-center py-6 border-b border-gray-700">
@@ -73,12 +73,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           className="text-white text-lg px-4 py-2 hover:bg-gray-700 rounded-lg transition-all"
         >
           Dashboard
-        </Link>
-        <Link
-          to="/profile"
-          className="text-white text-lg px-4 py-2 hover:bg-gray-700 rounded-lg transition-all"
-        >
-          Profile
         </Link>
         <Link
           to="/upload"
