@@ -11,7 +11,7 @@ const LoginPage = () => {
 
   const handleLoginSuccess = () => {
     setMessage({ type: 'success', text: 'Login successful!' });
-    setTimeout(() => navigate('/dashboard'), 2000);
+    setTimeout(() => navigate('/dashboard'), 700);
   };
 
   const handleLoginError = (errorText) => {

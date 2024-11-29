@@ -10,7 +10,7 @@ const SignUpPage = () => {
 
   const handleSignUpSuccess = () => {
     setMessage({ type: "success", text: "Sign-up successful! Welcome!" });
-    setTimeout(() => navigate("/login"), 3000); // Redirect after success
+    setTimeout(() => navigate("/login"), 700); // Redirect after success
   };
 
   const handleSignUpError = (errorText) => {

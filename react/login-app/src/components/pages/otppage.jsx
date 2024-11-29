@@ -7,6 +7,10 @@ const OTPPage = () => {
   const [error, setError] = useState('');
   const [userId] = useState(1); // Example user ID, replace it with actual value
   const navigate = useNavigate(); // Initialize navigate
+  const userEmail = localStorage.getItem('userEmail'); // Retrieve the email
+
+
+
 
 
   // Handle OTP change and auto-focus on next box
@@ -40,19 +44,23 @@ const OTPPage = () => {
 
     // Send OTP and userId to the backend for verification
     try {
-      const response = await fetch('https://your-backend-url.com/verify-otp', {
+      const response = await fetch('https://poudelsangam.com.np/hackathon/verify_otp.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, otp: otpValue }), // Send userId and OTP
-      });
+        body: JSON.stringify({ 
+          email: userEmail,  // Include userEmail in the request body
+          userId,            // Include userId
+          otp: otpValue      // Include otp value
+      }),
+          });
 
       const result = await response.json();
 
       if (response.ok) {
         alert('OTP verified successfully!');
-        navigate('/changepassword');
+        navigate('/changepass');
 
       } else {
         setError(result.message || 'Failed to verify OTP.');
@@ -66,7 +74,7 @@ const OTPPage = () => {
   const handleCancel = () => {
     setOtp(['', '', '', '']); // Reset OTP
     setError('');
-    navigate('/otppage');
+    navigate('/login');
 
   };
 
