@@ -4,7 +4,6 @@ import spacy
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
 
-
 def extract_skills(text):
     """
     Extract the Skills section from the given text.
@@ -17,34 +16,22 @@ def extract_skills(text):
         "core competencies", "tools & technologies", "proficiencies", "areas of expertise"
     ]
 
-    # Process the text using spaCy
-    doc = nlp(text)
-
-    # Split the text into sections based on new lines or headers
     lines = text.split("\n")
-
     skills = []
     capture = False  # Boolean flag to capture lines related to skills
 
     for line in lines:
-        # Normalize the line for keyword matching
         normalized_line = line.lower().strip()
-
-        # Check if the line contains any skills-related keywords
         if any(keyword in normalized_line for keyword in skills_keywords):
-            capture = True  # Start capturing lines
+            capture = True
             skills.append(line)  # Add the keyword line itself
             continue
-
-        # Continue capturing if within the skills section
         if capture:
-            if line.strip():  # Add non-empty lines
+            if line.strip():
                 skills.append(line)
             else:
-                # If an empty line is encountered, stop capturing
                 break
 
-    # Join the extracted lines into a single block of text
     return "\n".join(skills) if skills else "No skills section found."
 
 def read_text_from_file(file_path):
@@ -60,33 +47,46 @@ def read_text_from_file(file_path):
         print(f"Error reading file {file_path}: {e}")
         return None
 
-
+def write_text_to_file(file_path, content):
+    """
+    Write content to a file.
+    :param file_path: Path to the output file.
+    :param content: The content to write.
+    """
+    try:
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(content)
+        print(f"Extracted content written to {file_path}")
+    except Exception as e:
+        print(f"Error writing to file {file_path}: {e}")
 
 if __name__ == "__main__":
-    # Define the path to the "File" directory relative to the script
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Current script directory
-    file_directory = os.path.join(script_dir, "..", "Extracted File")  # Navigate to "File" directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    input_directory = os.path.join(script_dir, "..", "Extracted File")
+    output_directory = os.path.join(script_dir, "..", "Extracted File 2")
 
-    # Ensure the "File" directory exists
-    if not os.path.exists(file_directory):
-        print(f"Error: The directory {file_directory} does not exist.")
-        exit()
+    # Ensure the output directory exists
+    if not os.path.exists(output_directory):
+        print(f"Output directory {output_directory} does not exist. Creating it...")
+        os.makedirs(output_directory)
 
-    # Look for text files in the "File" directory
-    files = [f for f in os.listdir(file_directory) if f.endswith(".txt")]
-
+    # Look for text files in the input directory
+    files = [f for f in os.listdir(input_directory) if f.endswith(".txt")]
     if not files:
-        print(f"No text files found in {file_directory}.")
+        print(f"No text files found in {input_directory}. Exiting...")
         exit()
 
-    # Read the first text file (or modify to process all files)
-    sample_cv_path = os.path.join(file_directory, files[0])
-    cv_text = read_text_from_file(sample_cv_path)
+    for file_name in files:
+        input_file_path = os.path.join(input_directory, file_name)
+        output_file_path = os.path.join(output_directory, f"Skills_{file_name}")
 
-    if cv_text:
-        # Extract the Skills section
-        skills_section = extract_skills(cv_text)
+        cv_text = read_text_from_file(input_file_path)
 
-        # Output the extracted section
-        print("Extracted Skills Section:")
-        print(skills_section)
+        if cv_text:
+            # Extract the skills section
+            skills_section = extract_skills(cv_text)
+
+            # Write the extracted content to the output file
+            write_text_to_file(output_file_path, skills_section)
+
+            print(f"Processed {file_name}. Extracted content saved to {output_file_path}")

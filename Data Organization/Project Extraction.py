@@ -4,55 +4,32 @@ import spacy
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
 
-
 def extract_projects(text):
-    """
-    Extract the Projects section from the given text.
-    :param text: The full text of the CV.
-    :return: Extracted Projects section as a string.
-    """
-    # Define keywords typically associated with projects sections
+    # Keywords for the projects section
     project_keywords = [
         "projects", "personal projects", "academic projects", "side projects",
         "professional projects", "research projects", "notable projects", "key projects"
     ]
 
-    # Process the text using spaCy
-    doc = nlp(text)
-
-    # Split the text into sections based on new lines or headers
     lines = text.split("\n")
-
     projects = []
-    capture = False  # Boolean flag to capture lines related to projects
+    capture = False
 
     for line in lines:
-        # Normalize the line for keyword matching
         normalized_line = line.lower().strip()
-
-        # Check if the line contains any project keywords
         if any(keyword in normalized_line for keyword in project_keywords):
-            capture = True  # Start capturing lines
-            projects.append(line)  # Add the keyword line itself
+            capture = True
+            projects.append(line)
             continue
-
-        # Continue capturing if within the projects section
         if capture:
-            if line.strip():  # Add non-empty lines
+            if line.strip():
                 projects.append(line)
             else:
-                # If an empty line is encountered, stop capturing
                 break
 
-    # Join the extracted lines into a single block of text
     return "\n".join(projects) if projects else "No projects section found."
 
 def read_text_from_file(file_path):
-    """
-    Read the content of a file.
-    :param file_path: Path to the file.
-    :return: The content of the file as a string.
-    """
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
@@ -60,34 +37,41 @@ def read_text_from_file(file_path):
         print(f"Error reading file {file_path}: {e}")
         return None
 
-
-
+def write_text_to_file(file_path, content):
+    try:
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(content)
+        print(f"Extracted content written to {file_path}")
+    except Exception as e:
+        print(f"Error writing to file {file_path}: {e}")
 
 if __name__ == "__main__":
-    # Define the path to the "File" directory relative to the script
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Current script directory
-    file_directory = os.path.join(script_dir, "..", "Extracted File")  # Navigate to "File" directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    input_directory = os.path.join(script_dir, "..", "Extracted File")
+    output_directory = os.path.join(script_dir, "..", "Extracted File 2")
 
-    # Ensure the "File" directory exists
-    if not os.path.exists(file_directory):
-        print(f"Error: The directory {file_directory} does not exist.")
-        exit()
+    # Ensure the output directory exists
+    if not os.path.exists(output_directory):
+        print(f"Output directory {output_directory} does not exist. Creating it...")
+        os.makedirs(output_directory)
 
-    # Look for text files in the "File" directory
-    files = [f for f in os.listdir(file_directory) if f.endswith(".txt")]
-
+    # Check for text files in the input directory
+    files = [f for f in os.listdir(input_directory) if f.endswith(".txt")]
     if not files:
-        print(f"No text files found in {file_directory}.")
+        print(f"No text files found in {input_directory}. Exiting...")
         exit()
 
-    # Read the first text file (or modify to process all files)
-    sample_cv_path = os.path.join(file_directory, files[0])
-    cv_text = read_text_from_file(sample_cv_path)
+    for file_name in files:
+        input_file_path = os.path.join(input_directory, file_name)
+        output_file_path = os.path.join(output_directory, f"Project_{file_name}")
 
-    if cv_text:
-        # Extract the Projects section
-        projects_section = extract_projects(cv_text)
+        cv_text = read_text_from_file(input_file_path)
 
-        # Output the extracted section
-        print("Extracted Projects Section:")
-        print(projects_section)
+        if cv_text:
+            # Extract the projects section
+            projects_section = extract_projects(cv_text)
+
+            # Write the extracted content to the output file
+            write_text_to_file(output_file_path, projects_section)
+
+            print(f"Processed {file_name}. Extracted content saved to {output_file_path}")
