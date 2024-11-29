@@ -10,7 +10,8 @@ import FileInput from "./components/FileInput";
 import UploadButton from "./components/UploadButton";
 import ProgressBar from "./components/ProgressBar";
 import Logout from "./components/pages/logout";
-
+import ContactForm from "./components/pages/forgotpassword";
+import OTPPage from "./components/pages/otppage"; 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = true; // Replace with actual authentication logic
   return isAuthenticated ? element : <Navigate to="/login" />;
@@ -32,6 +33,8 @@ const App = () => {
       <Route path="/upload-button" element={<UploadButton />} />
       <Route path="/progress-bar" element={<ProgressBar />} />
       <Route path ="/logout" element = {<Logout/>}/>
+      <Route path ="/forgotpassword" element={<ContactForm/>}/>
+      <Route path ="/otppage" element={<OTPPage/>}/>
 
       {/* Private Routes */}
       <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />

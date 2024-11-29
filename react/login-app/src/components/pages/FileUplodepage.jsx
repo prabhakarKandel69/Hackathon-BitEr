@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Sidebar from '../Sidebar';
 import UserProfile from '../UserProfile';
 import UploadButton from '../UploadButton';
@@ -8,7 +9,7 @@ import ProgressBar from '../ProgressBar';
 const FileUploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [isUploading, setIsUploading] = useState(false); // Track upload state
+  const [isUploading, setIsUploading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -25,33 +26,44 @@ const FileUploadPage = () => {
       return;
     }
 
-    setIsUploading(true); // Disable the upload button
+    const user = JSON.parse(sessionStorage.getItem('user'));
+
+    if (!user || !user.id) {
+      alert('User ID not found. Please log in again.');
+      return;
+    }
+
+    setIsUploading(true);
     setUploadProgress(0);
 
-    // Simulate file upload using FormData
     const formData = new FormData();
     formData.append('file', selectedFile);
+    formData.append('id', user.id); // Include the user ID
 
     try {
-      // Mock API request to simulate file upload
-      await new Promise((resolve) => {
-        const interval = setInterval(() => {
-          setUploadProgress((prevProgress) => {
-            if (prevProgress >= 100) {
-              clearInterval(interval);
-              resolve();
-              return 100;
+      const response = await axios.post(
+        'https://poudelsangam.com.np/hackathon/uploadfile.php', // Update with your backend endpoint
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          onUploadProgress: (event) => {
+            if (event.total) {
+              const percentage = Math.round((event.loaded * 100) / event.total);
+              setUploadProgress(percentage);
             }
-            return prevProgress + 10; // Increment progress
-          });
-        }, 200); // Simulated delay
-      });
+          },
+        }
+      );
 
       alert('File uploaded successfully!');
+      console.log('Upload response:', response.data);
     } catch (error) {
-      alert('Error uploading file.');
+      console.error('Error uploading file:', error);
+      alert('Error uploading file. Please try again.');
     } finally {
-      setIsUploading(false); // Re-enable the button
+      setIsUploading(false);
     }
   };
 
@@ -75,7 +87,7 @@ const FileUploadPage = () => {
         }`}
       >
         {/* Top Bar */}
-        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10">
+        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10 lg:hidden">
           <button
             className="lg:hidden text-white"
             onClick={toggleSidebar}
@@ -96,26 +108,26 @@ const FileUploadPage = () => {
               />
             </svg>
           </button>
-          {/* User Profile */}
-          <UserProfile />
+        
         </div>
 
         {/* File Upload Content */}
-        <div className="flex-1 p-6 overflow-auto">
-          <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 mx-auto">
-            <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-              Upload File
-            </h1>
-            <FileInput onFileChange={handleFileChange} />
-            <ProgressBar progress={uploadProgress} />
-            <UploadButton
-              onUpload={handleFileUpload}
-              disabled={isUploading} // Disable button during upload
-            >
-              {isUploading ? 'Uploading...' : 'Upload'}
-            </UploadButton>
-          </div>
-        </div>
+        <div className="flex-1 flex justify-center items-center p-6 overflow-auto">
+  <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 mx-auto">
+    <h1 className="text-2xl font-semibold text-gray-800 mb-4">
+      Upload File
+    </h1>
+    <FileInput onFileChange={handleFileChange} />
+    <ProgressBar progress={uploadProgress} />
+    <UploadButton
+      onUpload={handleFileUpload}
+      disabled={isUploading}
+    >
+      {isUploading ? 'Uploading...' : 'Upload'}
+    </UploadButton>
+  </div>
+</div>
+
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const DashboardPage = () => {
         }`}
       >
         {/* Top Bar - Hidden in Large View */}
-        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10 lg:hidden">
+        <div className="flex items-center justify-between bg-blue-600 p-4 text-white sticky top-0 z-10 lg:hidden ">
           {/* Hamburger Menu for Mobile */}
           <button
             className="text-white"
@@ -52,8 +52,7 @@ const DashboardPage = () => {
             </svg>
           </button>
 
-          {/* User Profile */}
-          <UserProfile />
+       
         </div>
 
         {/* Content Area */}
