@@ -12,6 +12,8 @@ import ProgressBar from "./components/ProgressBar";
 import Logout from "./components/pages/logout";
 import ContactForm from "./components/pages/forgotpassword";
 import OTPPage from "./components/pages/otppage"; 
+import CvTable from "./components/pages/showdatapage";
+import ChangePasswordPage from "./components/pages/changepasswordpage";
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = true; // Replace with actual authentication logic
   return isAuthenticated ? element : <Navigate to="/login" />;
@@ -35,6 +37,9 @@ const App = () => {
       <Route path ="/logout" element = {<Logout/>}/>
       <Route path ="/forgotpassword" element={<ContactForm/>}/>
       <Route path ="/otppage" element={<OTPPage/>}/>
+      <Route path ="/showdatapage" element={<CvTable/>}/>
+      <Route path ="/changepass" element={<ChangePasswordPage/>}/>
+
 
       {/* Private Routes */}
       <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
