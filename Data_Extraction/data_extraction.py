@@ -60,6 +60,7 @@ def extract_text_from_pdf(pdf_path):
         print(f"Error extracting text from {pdf_path}: {e}")
         return None
 
+
 def extract_text_from_image(image_path):
     """
     Extract text from an image using Tesseract OCR.

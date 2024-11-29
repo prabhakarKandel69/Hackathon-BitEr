@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     for file_name in files:
         input_file_path = os.path.join(input_directory, file_name)
-        output_file_path = os.path.join(output_directory, f"Project_{file_name}")
+        output_file_path = os.path.join(output_directory, f"Project")
 
         cv_text = read_text_from_file(input_file_path)
 
