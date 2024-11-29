@@ -26,13 +26,17 @@ if data:
         request_data = {
             "cv_sender_name": data.get("Name", "Unknown"),
             "cv_sender_work_experience_score": data.get("Final Score Breakdown", {})
-                                                 .get("Weighted Score", 0.0),
+                                                .get("Work Experience", {})
+                                                .get("Weighted Score (out of 50)", 0.0),
             "cv_sender_project_score": data.get("Final Score Breakdown", {})
-                                           .get("Weighted Score", 0.0),
+                                            .get("Projects", {})
+                                            .get("Weighted Score (out of 30)", 0.0),
             "cv_sender_skills_score": data.get("Final Score Breakdown", {})
-                                          .get("Weighted Score", 0.0),
+                                        .get("Skills", {})
+                                        .get("Weighted Score (out of 20)", 0.0),
             "cv_sender_finalscore": data.get("Final Score", 0.0)
         }
+        print(request_data)
 
         # Sending the JSON data as a POST request
         response = requests.post(url, json=request_data, headers={'Content-Type': 'application/json'})
@@ -44,3 +48,14 @@ if data:
         print(f"An error occurred while processing the JSON data: {e}")
 else:
     print("Failed to send data. JSON file could not be loaded.")
+
+
+
+"""
+print("Request Data:")
+print(f"  Name: {request_data['cv_sender_name']}")
+print(f"  Work Experience Score: {request_data['cv_sender_work_experience_score']}")
+print(f"  Project Score: {request_data['cv_sender_project_score']}")
+print(f"  Skills Score: {request_data['cv_sender_skills_score']}")
+print(f"  Final Score: {request_data['cv_sender_finalscore']}")
+"""
