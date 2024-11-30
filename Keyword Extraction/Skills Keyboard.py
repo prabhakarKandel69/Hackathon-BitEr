@@ -49,11 +49,11 @@ def extract_skills_keywords(input_file, output_file):
     print(f"Skills keywords extracted and saved to '{output_file}'")
 
 # Define the input and output file paths
-input_skills_tokenized_file = "d:/Project/Hackathon/Tokenized File/Skills Tokenized.txt"
-output_skills_keywords_file = "d:/Project/Hackathon/Keyword Extraction/Skills Keyword.txt"  # Save as .txt
+input_skills_tokenized_file = "D:/Certificates/Hackathon/Tokenized File/Skills Tokenized.txt"
+output_skills_keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Skills Keyword.txt"  # Save as .txt
 
 # Ensure the necessary directories and files exist
-ensure_directory_exists("d:/Project/Hackathon/Keyword Extraction")
+ensure_directory_exists("D:/Certificates/Hackathon/Keyword Extraction")
 ensure_file_exists(input_skills_tokenized_file)  # Make sure the tokenized input file exists
 
 # Extract skills keywords from the tokenized skills file

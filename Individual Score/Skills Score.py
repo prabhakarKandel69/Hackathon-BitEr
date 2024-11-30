@@ -53,9 +53,9 @@ def process_skills(input_file, keywords_file, output_file):
     print(f"Score and matched keywords saved to '{output_file}'.")
 
 # File paths
-input_file = "d:/Project/Hackathon/Extracted File 2/Skills.txt"
-keywords_file = "d:/Project/Hackathon/Keyword Extraction/Skills keyword.txt"
-output_file = "d:/Project/Hackathon/Score Output/Skills Score.txt"
+input_file = "D:/Certificates/Hackathon/Extracted File 2/Skills"
+keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Skills keyword.txt"
+output_file = "D:/Certificates/Hackathon/Score Output/Skills Score.txt"
 
 # Process skills scoring
 process_skills(input_file, keywords_file, output_file)

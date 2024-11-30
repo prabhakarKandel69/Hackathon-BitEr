@@ -49,11 +49,11 @@ def extract_work_experience_keywords(input_file, output_file):
     print(f"Work experience keywords extracted and saved to '{output_file}'")
 
 # Define the input and output file paths
-input_work_experience_tokenized_file = "d:/Project/Hackathon/Tokenized File/Work Experience Tokenized.txt"
-output_work_experience_keywords_file = "d:/Project/Hackathon/Keyword Extraction/Work Experience Keyword.txt"  # Save as .txt
+input_work_experience_tokenized_file = "D:/Certificates/Hackathon/Tokenized File/Work Experience Tokenized.txt"
+output_work_experience_keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Work Experience Keyword.txt"  # Save as .txt
 
 # Ensure the necessary directories and files exist
-ensure_directory_exists("d:/Project/Hackathon/Keyword Extraction")
+ensure_directory_exists("D:/Certificates/Hackathon/Keyword Extraction")
 ensure_file_exists(input_work_experience_tokenized_file)  # Make sure the tokenized input file exists
 
 # Extract work experience keywords from the tokenized work experience file

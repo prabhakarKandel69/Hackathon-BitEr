@@ -53,9 +53,9 @@ def process_work_experience(input_file, keywords_file, output_file):
     print(f"Score and matched keywords saved to '{output_file}'.")
 
 # File paths
-input_file = "d:/Project/Hackathon/Extracted File 2/Work Experience.txt"
-keywords_file = "d:/Project/Hackathon/Keyword Extraction/Work Experience keyword.txt"
-output_file = "d:/Project/Hackathon/Score Output/Work Experience Score.txt"
+input_file = "D:/Certificates/Hackathon/Extracted File 2/Experience"
+keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Work Experience keyword.txt"
+output_file = "D:/Certificates/Hackathon/Score Output/Work Experience Score.txt"
 
 # Process work experience scoring
 process_work_experience(input_file, keywords_file, output_file)

@@ -11,7 +11,7 @@ def extract_projects(text):
         "professional projects", "research projects", "notable projects", "key projects"
     ]
 
-    lines = text.split("\n")
+    lines = text.split("\n") 
     projects = []
     capture = False
 

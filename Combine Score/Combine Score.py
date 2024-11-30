@@ -34,9 +34,9 @@ def extract_name(file_path):
     return "Unknown"
 
 # File paths
-score_output_dir = "d:/Project/Hackathon/Score Output"
-extracted_file_path = "d:/Project/Hackathon/Extracted File 2/Name.txt"  # Path to the file with the name
-output_file = "d:/Project/Hackathon/Final Score.json"
+score_output_dir = "D:/Certificates/Hackathon/Score Output"
+extracted_file_path = "D:/Certificates/Hackathon/Extracted File 2/Name.txt"  # Path to the file with the name
+output_file = "D:/Certificates/Hackathon/Final Score.json"
 
 # File names for scores
 files = {

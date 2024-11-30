@@ -50,11 +50,11 @@ def tokenize_work_experience(input_file, output_file):
     print(f"Work experience tokens extracted and saved to '{output_file}'")
 
 # Define the input and output file paths
-input_work_experience_file = "d:/Project/Hackathon/Extracted File 2/Work Experience.txt"
-output_work_experience_tokenized_file = "d:/Project/Hackathon/Tokenized File/Work Experience Tokenized.txt"  # Save as .txt file
+input_work_experience_file = "D:/Certificates/Hackathon/Extracted File 2/Experience"
+output_work_experience_tokenized_file = "D:/Certificates/Hackathon/Tokenized File/Work Experience Tokenized.txt"  # Save as .txt file
 
 # Ensure the necessary directories and files exist
-ensure_directory_exists("d:/Project/Hackathon/Tokenized File")
+ensure_directory_exists("D:/Certificates/Hackathon/Tokenized File")
 ensure_file_exists(input_work_experience_file)  # Make sure the input file exists
 
 # Tokenize the work experience file using spaCy

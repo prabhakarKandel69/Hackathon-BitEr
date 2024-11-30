@@ -78,7 +78,7 @@ def extract_text_from_image(image_path):
 
 if __name__ == "__main__":
     # Define the URL of the zip file
-    zip_url = "https://poudelsangam.com.np/hackathon/cv/Niranjan-Bhatta.pdf.zip"
+    zip_url = "https://poudelsangam.com.np/hackathon/cv/cv1.pdf"
 
     # Define the base directory structure
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory

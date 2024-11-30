@@ -49,11 +49,11 @@ def extract_keywords(input_file, output_file):
     print(f"Keywords extracted and saved to '{output_file}'")
 
 # Define the input and output file paths
-input_project_tokenized_file = "d:/Project/Hackathon/Tokenized File/Project Tokenized.txt"
-output_project_keywords_file = "d:/Project/Hackathon/Keyword Extraction/Project Keyword.txt"  # Save as .txt
+input_project_tokenized_file = "D:/Certificates/Hackathon/Tokenized File/Project Tokenized.txt"
+output_project_keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Project Keyword.txt"  # Save as .txt
 
 # Ensure the necessary directories and files exist
-ensure_directory_exists("d:/Project/Hackathon/Keyword Extraction")
+ensure_directory_exists("D:/Certificates/Hackathon/Keyword Extraction")
 ensure_file_exists(input_project_tokenized_file)  # Make sure the tokenized input file exists
 
 # Extract keywords from the tokenized project file

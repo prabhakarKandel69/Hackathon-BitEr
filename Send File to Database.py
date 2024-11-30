@@ -3,7 +3,7 @@ import json
 import os
 
 # File paths
-json_file_path = "d:/Project/Hackathon/Final Score.json"
+json_file_path = "D:/Certificates/Hackathon/Final Score.json"
 
 # URL of the live server PHP endpoint
 url = "https://poudelsangam.com.np/hackathon/endpoint.php"
@@ -26,13 +26,13 @@ if data:
         request_data = {
             "cv_sender_name": data.get("Name", "Unknown"),
             "cv_sender_work_experience_score": data.get("Final Score Breakdown", {})
-                                                .get("Work Experience", {})
-                                                .get("Weighted Score (out of 50)", 0.0),
+                                                   .get("Work Experience", {})
+                                                   .get("Weighted Score (out of 50)", 0.0),
             "cv_sender_project_score": data.get("Final Score Breakdown", {})
-                                            .get("Projects", {})
-                                            .get("Weighted Score (out of 30)", 0.0),
+                                           .get("Projects", {})
+                                           .get("Weighted Score (out of 30)", 0.0),
             "cv_sender_skills_score": data.get("Final Score Breakdown", {})
-                                        .get("Skills", {})
+                                          .get("Skills", {})
                                         .get("Weighted Score (out of 20)", 0.0),
             "cv_sender_finalscore": data.get("Final Score", 0.0)
         }

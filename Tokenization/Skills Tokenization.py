@@ -44,11 +44,11 @@ def tokenize_file(input_file, output_file):
     print(f"Tokenized content saved to '{output_file}'")
 
 # Define the input and output file paths
-input_skills_file = "d:/Project/Hackathon/Extracted File 2/Skills.txt"
-output_skills_file = "d:/Project/Hackathon/Tokenized File/Skills Tokenized.txt"  # Save as .txt file
+input_skills_file = "D:/Certificates/Hackathon/Extracted File 2/Skills"
+output_skills_file = "D:/Certificates/Hackathon/Tokenized File/Skills Tokenized.txt"  # Save as .txt file
 
 # Ensure the necessary directories and files exist
-ensure_directory_exists("d:/Project/Hackathon/Tokenized File")
+ensure_directory_exists("D:/Certificates/Hackathon/Tokenized File")
 ensure_file_exists(input_skills_file)  # Make sure the input file exists
 
 # Tokenize the skills file using spaCy

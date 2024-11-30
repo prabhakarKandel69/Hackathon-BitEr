@@ -53,9 +53,9 @@ def process_project(input_file, keywords_file, output_file):
     print(f"Score and matched keywords saved to '{output_file}'.")
 
 # File paths
-input_file = "d:/Project/Hackathon/Extracted File 2/Project.txt"
-keywords_file = "d:/Project/Hackathon/Keyword Extraction/Project keyword.txt"
-output_file = "d:/Project/Hackathon/Score Output/Project Score.txt"
+input_file = "D:/Certificates/Hackathon/Extracted File 2/Project"
+keywords_file = "D:/Certificates/Hackathon/Keyword Extraction/Project keyword.txt"
+output_file = "D:/Certificates/Hackathon/Score Output/Project Score.txt"
 
 # Process project scoring
 process_project(input_file, keywords_file, output_file)
