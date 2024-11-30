@@ -23,10 +23,10 @@ const CvTable = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        if (data.status === "success") {
+        if (data.status === "success" && Array.isArray(data.data)) {
           setCvData(data.data); // Set the fetched data
         } else {
-          throw new Error(data.message);
+          throw new Error(data.message || "Invalid data received");
         }
       } catch (err) {
         setError(err.message);
@@ -38,7 +38,8 @@ const CvTable = () => {
     fetchData();
   }, []);
 
-  if (loading) {
+  // Show loading if data is empty
+  if (loading || cvData.length === 0) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="text-xl text-gray-500">Loading...</div>
@@ -95,41 +96,35 @@ const CvTable = () => {
             <h1 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
               CV Data Table
             </h1>
-            {cvData.length === 0 ? (
-              <div className="text-center text-gray-500 py-6">
-                <p>No CV data available to display.</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full table-auto border-separate border-spacing-0.5">
-                  <thead className="bg-blue-500 text-white">
-                    <tr>
-                      <th className="px-4 py-2 text-left">#</th>
-                      <th className="px-4 py-2 text-left">Name</th>
-                      <th className="px-4 py-2 text-left">Work Experience Score</th>
-                      <th className="px-4 py-2 text-left">Project Score</th>
-                      <th className="px-4 py-2 text-left">Skills Score</th>
-                      <th className="px-4 py-2 text-left">Final Score</th>
+            <div className="overflow-x-auto">
+              <table className="min-w-full table-auto border-separate border-spacing-0.5">
+                <thead className="bg-blue-500 text-white">
+                  <tr>
+                    <th className="px-4 py-2 text-left">id</th>
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Work Experience Score</th>
+                    <th className="px-4 py-2 text-left">Project Score</th>
+                    <th className="px-4 py-2 text-left">Skills Score</th>
+                    <th className="px-4 py-2 text-left">Final Score</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-gray-50">
+                  {cvData.map((cv, index) => (
+                    <tr
+                      key={cv.id}
+                      className="border-b hover:bg-gray-200 transition-all duration-200"
+                    >
+                      <td className="px-4 py-3">{index + 1}</td> {/* Index-based ID */}
+                      <td className="px-4 py-3">{cv.cv_sender_name}</td>
+                      <td className="px-4 py-3">{cv.cv_sender_work_experience_score}</td>
+                      <td className="px-4 py-3">{cv.cv_sender_project_score}</td>
+                      <td className="px-4 py-3">{cv.cv_sender_skills_score}</td>
+                      <td className="px-4 py-3">{cv.cv_sender_finalscore}</td>
                     </tr>
-                  </thead>
-                  <tbody className="bg-gray-50">
-                    {cvData.map((cv, index) => (
-                      <tr
-                        key={cv.id}
-                        className="border-b hover:bg-gray-200 transition-all duration-200"
-                      >
-                        <td className="px-4 py-3">{index + 1}</td> {/* Index-based ID */}
-                        <td className="px-4 py-3">{cv.cv_sender_name}</td>
-                        <td className="px-4 py-3">{cv.cv_sender_work_experience_score}</td>
-                        <td className="px-4 py-3">{cv.cv_sender_project_score}</td>
-                        <td className="px-4 py-3">{cv.cv_sender_skills_score}</td>
-                        <td className="px-4 py-3">{cv.cv_sender_finalscore}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
